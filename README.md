@@ -1,6 +1,6 @@
-# Example::CircleCi::PullRequestReview
+# Example::CircleCi::PullRequest
 
-run rubocop and pull request review comment
+run rubocop and pull request comment
 
 [Actual script for CircleCI](./bin/run-tests.sh)
 
@@ -25,7 +25,7 @@ if [ "${CIRCLE_BRANCH}" != "master" ]; then
    | checkstyle_filter-git diff origin/master \
    | saddler report \
       --require saddler/reporter/github \
-      --reporter Saddler::Reporter::Github::PullRequestReviewComment
+      --reporter Saddler::Reporter::Github::PullRequestComment
 fi
 exit 0
 ```

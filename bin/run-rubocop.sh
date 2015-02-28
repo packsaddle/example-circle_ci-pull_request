@@ -5,7 +5,10 @@ if [ "${CIRCLE_BRANCH}" != "master" ]; then
   #
 
   gem install --no-document rubocop-select rubocop rubocop-checkstyle_formatter \
-              checkstyle_filter-git saddler saddler-reporter-github
+              checkstyle_filter-git saddler saddler-reporter-github \
+              github_status_notifier
+
+  github-status-notifier notify --state pending --context saddler/rubocop
 
   # CircleCI stop script ;(
   # git diff -z --name-only origin/master
@@ -35,5 +38,7 @@ if [ "${CIRCLE_BRANCH}" != "master" ]; then
    | saddler report \
       --require saddler/reporter/github \
       --reporter Saddler::Reporter::Github::PullRequestComment
+
+    github-status-notifier notify --exit-status $? --context saddler/rubocop
 fi
 exit 0

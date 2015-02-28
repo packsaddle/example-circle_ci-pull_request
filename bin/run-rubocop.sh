@@ -3,6 +3,8 @@ set -v
 if [ "${CIRCLE_BRANCH}" != "master" ]; then
   # Circle-CI
   #
+  gem install --no-document github_status_notifier
+  github-status-notifier notify --state pending
 
   gem install --no-document rubocop-select rubocop rubocop-checkstyle_formatter \
               checkstyle_filter-git saddler saddler-reporter-github
@@ -35,5 +37,7 @@ if [ "${CIRCLE_BRANCH}" != "master" ]; then
    | saddler report \
       --require saddler/reporter/github \
       --reporter Saddler::Reporter::Github::PullRequestComment
+
+    github-status-notifier notify --exit-status $? --context saddler/rubocop
 fi
 exit 0
